@@ -1,0 +1,110 @@
+{
+	"info": {
+		"_postman_id": "2b806778-b785-463b-82c6-9425747d10a2",
+		"name": "HW",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10975761"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"testuser@yandex.ru\",\n  \"firstName\": \"Ivan\",\n  \"secondName\": \"Ivanov\",\n  \"gender\": 1,\n  \"birthDate\": \"1986-05-10\",\n  \"city\": \"Kazan\",\n  \"password\": \"qwerty\",\n  \"interests\": [\n    \"swimming\",\n    \"crafting\",\n    \"science\"\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"testuser@yandex.ru\",\n  \"password\": \"qwerty\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Info",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0ZXN0dXNlckB5YW5kZXgucnUiLCJpYXQiOjE3MDQ2NjEyMDAsImV4cCI6MTcwNDc0NzYwMH0.ZEIvIFaN17I2UjKTNjLSNe_uZlJ5mErfEzuQi7r4ZtOJ4tCwUBEfsM2AsqhCUtK2",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": \"5a5e121c-e81f-43f4-a7f9-d991a6cd17a4\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/info",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"info"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
