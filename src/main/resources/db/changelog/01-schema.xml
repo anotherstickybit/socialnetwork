@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="01" author="Sadykov-MZ">
+        <preConditions>
+            <not>
+                <tableExists tableName="users"/>
+            </not>
+            <not>
+                <tableExists tableName="user_info"/>
+            </not>
+            <not>
+                <tableExists tableName="gender"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="users">
+            <column name="id" type="uuid" remarks="Идентификатор записи" defaultValue="uuid_generate_v4()">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="enabled" type="boolean" remarks="Доступна ли учетная запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="text" remarks="Пароль в зашифрованном виде">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="gender">
+            <column name="id" type="serial" remarks="Идентификатор записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="text" remarks="Название пола">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <sql>
+            insert into gender(name)
+            values ('MALE'),
+                   ('FEMALE');
+        </sql>
+
+        <createTable tableName="user_info">
+            <column name="id" type="uuid" remarks="Идентификатор записи">
+                <constraints nullable="false" foreignKeyName="fk_user_info_user" references="users(id)"/>
+            </column>
+            <column name="email" type="citext" remarks="Адрес электронной почты пользователя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="text" remarks="Имя пользователя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="second_name" type="text" remarks="Фамилия пользователя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gender_id" type="integer" remarks="Идентификатор пола пользователя">
+                <constraints nullable="false" foreignKeyName="fk_user_info_gender" references="gender(id)"/>
+            </column>
+            <column name="birth_date" type="date" remarks="Дата рождения пользователя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="text" remarks="Город пользователя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="interests" type="text[]" remarks="Интересы пользователя"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

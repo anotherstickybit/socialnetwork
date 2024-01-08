@@ -1,4 +1,5 @@
 package ru.puppeteers.socialnetwork.api.dto
 
-class LoginResponse {
-}
+data class LoginResponse(
+    val token: String
+)

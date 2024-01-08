@@ -1,4 +1,12 @@
 package ru.puppeteers.socialnetwork.api.dto
 
-class UserInfoResponse {
-}
+import java.util.*
+
+data class UserInfoResponse(
+    val username: String,
+    val firstName: String,
+    val secondName: String,
+    val birthDate: Date,
+    val city: String,
+    val interests: Set<String>?
+)

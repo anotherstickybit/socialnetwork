@@ -1,4 +1,6 @@
 package ru.puppeteers.socialnetwork.entity
 
-class Gender {
-}
+data class Gender(
+    val id: Int,
+    val name: String
+)

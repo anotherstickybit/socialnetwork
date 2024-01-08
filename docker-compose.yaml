@@ -11,3 +11,10 @@ services:
       - POSTGRES_PASSWORD=postgres
     volumes:
       - ./db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
+
+  backend:
+    build:
+      args:
+        JAR_FILE: build/libs/socialnetwork.jar
+    links:
+      - db

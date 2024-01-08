@@ -1,0 +1,36 @@
+###
+POST http://localhost:8080/user/register
+Content-Type: application/json
+
+{
+  "email": "testuser@yandex.ru",
+  "firstName": "Ivan",
+  "secondName": "Ivanov",
+  "gender": 1,
+  "birthDate": "1986-05-10",
+  "city": "Kazan",
+  "password": "qwerty",
+  "interests": [
+    "swimming",
+    "crafting",
+    "science"
+  ]
+}
+
+###
+POST http://localhost:8080/user/login
+Content-Type: application/json
+
+{
+  "email": "testuser@yandex.ru",
+  "password": "qwerty"
+}
+
+###
+GET http://localhost:8080/user/info
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0ZXN0dXNlckB5YW5kZXgucnUiLCJpYXQiOjE3MDQ2NjEyMDAsImV4cCI6MTcwNDc0NzYwMH0.ZEIvIFaN17I2UjKTNjLSNe_uZlJ5mErfEzuQi7r4ZtOJ4tCwUBEfsM2AsqhCUtK2
+Content-Type: application/json
+
+{
+  "id": "5a5e121c-e81f-43f4-a7f9-d991a6cd17a4"
+}

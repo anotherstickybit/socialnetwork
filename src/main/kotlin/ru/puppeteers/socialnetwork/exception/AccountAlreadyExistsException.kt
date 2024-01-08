@@ -1,4 +1,4 @@
 package ru.puppeteers.socialnetwork.exception
 
-class AccountAlreadyExistsException {
-}
+class AccountAlreadyExistsException(message: String? = null, cause: Throwable? = null) :
+    RuntimeException(message, cause)

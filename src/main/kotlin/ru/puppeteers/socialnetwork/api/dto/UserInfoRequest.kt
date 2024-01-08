@@ -1,4 +1,7 @@
 package ru.puppeteers.socialnetwork.api.dto
 
-class UserInfoRequest {
-}
+import java.util.*
+
+data class UserInfoRequest(
+    val id: UUID
+)
