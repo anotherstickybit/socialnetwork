@@ -9,9 +9,7 @@ plugins {
 }
 
 group = 'ru.puppeteers'
-version = '0.0.1-SNAPSHOT'
-
-jar.archiveFileName = "socialnetwork.jar"
+version = '1.0'
 
 java {
 	sourceCompatibility = '17'
@@ -38,7 +36,7 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'org.postgresql:postgresql'
+	implementation 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
@@ -57,6 +55,7 @@ tasks.named('test') {
 
 tasks.jar {
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	archiveFileName = "socialnetwork.jar"
 	manifest {
 		attributes["Main-Class"] = "ru.puppeteers.socialnetwork.SocialnetworkApplicationKt"
 	}
