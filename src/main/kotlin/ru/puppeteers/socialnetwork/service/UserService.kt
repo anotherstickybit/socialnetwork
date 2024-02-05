@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service
 import ru.puppeteers.socialnetwork.api.dto.*
 import ru.puppeteers.socialnetwork.dao.UserDao
 import ru.puppeteers.socialnetwork.exception.UserDoesNotExistsException
+import ru.puppeteers.socialnetwork.mapper.UserMapper
 
 @Service
 class UserService(
@@ -32,17 +33,14 @@ class UserService(
         return LoginResponse(token)
     }
 
+    fun search(searchRequest: UserSearchRequest): List<UserInfoResponse> {
+        return userDao.searchByFirstAndLastName(searchRequest)
+    }
+
     fun getUserInfo(request: UserInfoRequest): UserInfoResponse {
         val user = userDao.getUserById(request.id)
             ?: throw UserDoesNotExistsException("User with id ${request.id} does not exist.")
 
-        return UserInfoResponse(
-            user.username,
-            user.firstName,
-            user.secondName,
-            user.birthDate,
-            user.city,
-            user.interests
-        )
+        return UserMapper.mapUser(user)
     }
 }

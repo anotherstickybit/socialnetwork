@@ -1,11 +1,12 @@
 package ru.puppeteers.socialnetwork.dao
 
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import ru.puppeteers.socialnetwork.api.dto.RegisterRequest
 import ru.puppeteers.socialnetwork.api.dto.RegisterResponse
+import ru.puppeteers.socialnetwork.api.dto.UserInfoResponse
+import ru.puppeteers.socialnetwork.api.dto.UserSearchRequest
 import ru.puppeteers.socialnetwork.entity.User
 import ru.puppeteers.socialnetwork.exception.AccountAlreadyExistsException
 import java.sql.ResultSet
@@ -20,7 +21,7 @@ class UserDao(
     @Transactional
     fun register(request: RegisterRequest): RegisterResponse {
         try {
-            checkIfAccountAlreadyExist(request)
+//            checkIfAccountAlreadyExist(request)
             val gender = genderDao.findById(request.gender)
             val uuid = template.queryForObject(
                 "insert into users(enabled, password) values (true, :passwd) returning id",
@@ -42,8 +43,10 @@ class UserDao(
                     "interests" to request.interests.toTypedArray()
                 )
             )
+            println("User registered with id: $uuid")
             return RegisterResponse(true, null)
         } catch (e: Exception) {
+            println(e)
             return RegisterResponse(false, listOf(e.message))
         }
     }
@@ -72,6 +75,20 @@ class UserDao(
         }
     }
 
+    @Transactional(readOnly = true)
+    fun searchByFirstAndLastName(searchRequest: UserSearchRequest): List<UserInfoResponse> {
+        return template.query(
+            "select id, email, first_name, second_name, birth_date, city, interests from user_info " +
+                    "where first_name like :first_name and second_name like :second_name order by id",
+            mapOf(
+                "first_name" to searchRequest.firstName + "%",
+                "second_name" to searchRequest.lastName + "%"
+            )
+        ) { rs, _ ->
+            buildUserInfo(rs)
+        }
+    }
+
     private fun checkIfAccountAlreadyExist(request: RegisterRequest) {
         val isAccountExists = template.queryForObject(
             "select exists(select u.id from user_info u where u.email = :email)",
@@ -83,7 +100,19 @@ class UserDao(
             throw AccountAlreadyExistsException("Account with email: ${request.email} already exists")
         }
     }
-    @Suppress("UNCHECKED_CAST")
+
+    private fun buildUserInfo(rs: ResultSet): UserInfoResponse {
+        return UserInfoResponse(
+            rs.getString("email"),
+            rs.getString("first_name"),
+            rs.getString("second_name"),
+            rs.getDate("birth_date"),
+            rs.getString("city"),
+            setOf(*rs.getArray("interests").array as Array<String>)
+        )
+    }
+
+            @Suppress("UNCHECKED_CAST")
     private fun buildUser(rs: ResultSet): User {
         return User(
             rs.getObject("id") as UUID,

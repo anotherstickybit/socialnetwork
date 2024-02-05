@@ -34,3 +34,13 @@ Content-Type: application/json
 {
   "id": "5a5e121c-e81f-43f4-a7f9-d991a6cd17a4"
 }
+
+###
+POST http://localhost:8080/user/search
+Content-Type: application/json
+
+{
+  "firstName": "А",
+  "lastName": "А"
+}
+

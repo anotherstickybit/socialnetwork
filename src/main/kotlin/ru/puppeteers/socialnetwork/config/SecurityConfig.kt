@@ -53,6 +53,7 @@ class SecurityConfig(
             authorizeRequests {
                 authorize("/user/login", permitAll)
                 authorize("/user/register", permitAll)
+                authorize("/user/search", permitAll)
                 authorize(anyRequest, authenticated)
             }
             sessionManagement {

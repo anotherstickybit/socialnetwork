@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="02" author="Sadykov-MZ">
+        <preConditions>
+            <tableExists tableName="user_info"/>
+        </preConditions>
+
+        <sql>
+            create extension pg_trgm;
+            create index trgm_index_user_info_first_name_last_name on user_info using gin
+                (
+                first_name gin_trgm_ops,
+                second_name gin_trgm_ops
+                );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

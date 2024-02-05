@@ -31,4 +31,10 @@ class UserEndpoint(
     fun info(infoRequest: UserInfoRequest): UserInfoResponse {
         return userService.getUserInfo(infoRequest)
     }
+
+    @POST
+    @Path("/search")
+    fun search(searchRequest: UserSearchRequest): List<UserInfoResponse> {
+        return userService.search(searchRequest)
+    }
 }
