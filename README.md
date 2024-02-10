@@ -23,3 +23,9 @@
 3. В корне проекта лежит файл с тестовыми запросами: [файл](requests.http).
    Коллекция для постмана [тык](HW.postman_collection.json)
    (при запросе пользовательской информации следует обновить токен и айди в запросе)
+
+
+
+
+./jmeter -n -t templates/simple-http-request-test-plan.jmx -l results_index_1000.jtl
+

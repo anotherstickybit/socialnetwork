@@ -26,7 +26,7 @@ class UserEndpoint(
         return userService.register(registerRequest)
     }
 
-    @GET
+    @POST
     @Path("/info")
     fun info(infoRequest: UserInfoRequest): UserInfoResponse {
         return userService.getUserInfo(infoRequest)

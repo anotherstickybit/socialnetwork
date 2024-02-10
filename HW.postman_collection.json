@@ -66,25 +66,15 @@
 		},
 		{
 			"name": "Get User Info",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0ZXN0dXNlckB5YW5kZXgucnUiLCJpYXQiOjE3MDQ2NjEyMDAsImV4cCI6MTcwNDc0NzYwMH0.ZEIvIFaN17I2UjKTNjLSNe_uZlJ5mErfEzuQi7r4ZtOJ4tCwUBEfsM2AsqhCUtK2",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"id\": \"5a5e121c-e81f-43f4-a7f9-d991a6cd17a4\"\n}",
+					"raw": "{\n  \"id\": \"a154e2a4-088d-4f99-852e-9ece94cf52a0\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -107,21 +97,13 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
-			"request": {
-				"method": "GET",
-				"header": []
-			},
-			"response": []
-		},
-		{
-			"name": "New Request",
+			"name": "Search",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"firstName\": \"А\",\n  \"lastName\": \"А\"\n}",
+					"raw": "{\n\t\"firstName\": \"А\",\n\t\"lastName\": \"А\"\n\t}",
 					"options": {
 						"raw": {
 							"language": "json"
