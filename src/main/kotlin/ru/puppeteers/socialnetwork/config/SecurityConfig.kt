@@ -6,18 +6,15 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import ru.puppeteers.socialnetwork.dao.UserDao
 
 @Configuration
 @EnableWebSecurity
@@ -53,8 +50,8 @@ class SecurityConfig(
             authorizeRequests {
                 authorize("/user/login", permitAll)
                 authorize("/user/register", permitAll)
-                authorize("/user/info", permitAll)
                 authorize("/user/search", permitAll)
+                authorize("/feed/get", permitAll)
                 authorize(anyRequest, authenticated)
             }
             sessionManagement {

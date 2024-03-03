@@ -3,7 +3,7 @@ POST http://localhost:8080/user/register
 Content-Type: application/json
 
 {
-  "email": "testuser@yandex.ru",
+  "email": "imfromkazan@yandex.ru",
   "firstName": "Ivan",
   "secondName": "Ivanov",
   "gender": 1,
@@ -14,7 +14,8 @@ Content-Type: application/json
     "swimming",
     "crafting",
     "science"
-  ]
+  ],
+  "isCelebrity": false
 }
 
 ###
@@ -22,17 +23,18 @@ POST http://localhost:8080/user/login
 Content-Type: application/json
 
 {
-  "email": "testuser@yandex.ru",
+  "email": "imfromkazan@yandex.ru",
   "password": "qwerty"
 }
+> {% client.global.set("auth_token", response.body.token) %}
 
 ###
 POST http://localhost:8080/user/info
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0ZXN0dXNlckB5YW5kZXgucnUiLCJpYXQiOjE3MDQ2NjEyMDAsImV4cCI6MTcwNDc0NzYwMH0.ZEIvIFaN17I2UjKTNjLSNe_uZlJ5mErfEzuQi7r4ZtOJ4tCwUBEfsM2AsqhCUtK2
+Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
 {
-  "id": "5a5e121c-e81f-43f4-a7f9-d991a6cd17a4"
+  "id": "4846a879-2cc9-44d4-966b-db49dbe3ecec"
 }
 
 ###
@@ -42,5 +44,24 @@ Content-Type: application/json
 {
   "firstName": "А",
   "lastName": "А"
+}
+
+
+###
+POST http://localhost:8080/friend/add
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "friendId": "4846a879-2cc9-44d4-966b-db49dbe3ecec"
+}
+
+###
+POST http://localhost:8080/feed/get
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "forceUpdate": false
 }
 

@@ -71,10 +71,16 @@
 					"type": "noauth"
 				},
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer access_token",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"id\": \"a154e2a4-088d-4f99-852e-9ece94cf52a0\"\n}",
+					"raw": "{\n  \"id\": \"4846a879-2cc9-44d4-966b-db49dbe3ecec\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -120,6 +126,76 @@
 					"path": [
 						"user",
 						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Friend",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt-token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"friendId\": \"4846a879-2cc9-44d4-966b-db49dbe3ecec\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/friend/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"friend",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Feed",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt-token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"forceUpdate\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/feed/get",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"feed",
+						"get"
 					]
 				}
 			},

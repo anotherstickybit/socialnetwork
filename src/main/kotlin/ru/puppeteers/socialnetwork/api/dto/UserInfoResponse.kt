@@ -8,5 +8,6 @@ data class UserInfoResponse(
     val secondName: String,
     val birthDate: Date,
     val city: String,
-    val interests: Set<String>?
+    val interests: Set<String>?,
+    val isCelebrity: Boolean
 )

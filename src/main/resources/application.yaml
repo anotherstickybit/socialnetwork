@@ -1,9 +1,29 @@
+
 spring:
   liquibase:
     change-log: db/liquibase-changelog.xml
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5433/sn
+    url: jdbc:postgresql://localhost:5432/sn
     username: postgres
     password: postgres
+
+  rabbitmq:
+    username: ${RABBIT_USERNAME:rmuser}
+    password: ${RABBIT_PASSWORD:rmpassword}
+    host: ${RABBIT_HOST:localhost}
+    port: ${RABBIT_PORT:5672}
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+rabbit:
+  queue:
+    name: posts
+  exchange:
+    name: posts_exchange
+  routing:
+    key: posts_routing_key

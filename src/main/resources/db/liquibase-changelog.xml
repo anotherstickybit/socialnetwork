@@ -8,5 +8,6 @@
 
     <include file="changelog/01-schema.xml" relativeToChangelogFile="true"/>
     <include file="changelog/02-index.xml" relativeToChangelogFile="true"/>
-
+    <include file="changelog/03-friendship_post.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/04-add_celebrity_column.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

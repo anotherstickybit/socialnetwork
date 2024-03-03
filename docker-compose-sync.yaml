@@ -21,6 +21,15 @@ services:
       timeout: 2s
       retries: 5
 
+  rabbit:
+    image: rabbitmq:3.13.0-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=rmuser
+      - RABBITMQ_DEFAULT_PASS=rmpassword
+
   db_slave_1:
     image: bitnami/postgresql:16.1.0
     ports:
@@ -80,6 +89,13 @@ services:
     logging:
       driver: none
 
+  redis:
+    image: redis:7.2.4-alpine
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_PORT=6379
+
   backend:
     build:
       args:
@@ -94,6 +110,12 @@ services:
       db_slave_2:
         condition: service_healthy
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/sn
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-master:5432/sn
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
+      - RABBIT_HOST=rabbit
+      - RABBIT_PORT=5672
+      - RABBIT_USERNAME=rmuser
+      - RABBIT_PASSWORD=rmpassword
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379

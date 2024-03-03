@@ -14,7 +14,8 @@ data class User(
     val secondName: String,
     val birthDate: Date,
     val city: String,
-    val interests: Set<String>?
+    val interests: Set<String>?,
+    val isCelebrity: Boolean
 ) : UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return mutableListOf()

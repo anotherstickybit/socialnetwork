@@ -21,7 +21,7 @@ class UserDao(
     @Transactional
     fun register(request: RegisterRequest): RegisterResponse {
         try {
-//            checkIfAccountAlreadyExist(request)
+            checkIfAccountAlreadyExist(request)
             val gender = genderDao.findById(request.gender)
             val uuid = template.queryForObject(
                 "insert into users(enabled, password) values (true, :passwd) returning id",
@@ -31,7 +31,8 @@ class UserDao(
 
             template.update(
                 "insert into user_info(id, email, first_name, second_name, gender_id, birth_date, city, " +
-                        "interests) values (:id, :email, :firstName, :secondName, :gender, :birthDate, :city, :interests)",
+                        "interests, is_celebrity) values (:id, :email, :firstName, :secondName, :gender, :birthDate, " +
+                        ":city, :interests, :is_celebrity)",
                 mapOf(
                     "id" to uuid,
                     "email" to request.email,
@@ -40,7 +41,8 @@ class UserDao(
                     "gender" to gender.id,
                     "birthDate" to request.birthDate,
                     "city" to request.city,
-                    "interests" to request.interests.toTypedArray()
+                    "interests" to request.interests.toTypedArray(),
+                    "is_celebrity" to request.isCelebrity
                 )
             )
             println("User registered with id: $uuid")
@@ -55,8 +57,8 @@ class UserDao(
     fun getUserByEmail(email: String): User? {
         return template.queryForObject(
             "select ui.id, u.enabled, u.password, ui.email, ui.first_name, ui.second_name, " +
-                    "ui.birth_date, ui.city, ui.interests from user_info ui inner join users u on u.id = ui.id " +
-                    "where ui.email = :email",
+                    "ui.birth_date, ui.city, ui.interests, ui.is_celebrity from user_info ui inner join users u " +
+                    "on u.id = ui.id where ui.email = :email",
             mapOf("email" to email)
         ) { rs, _ ->
             buildUser(rs)
@@ -67,8 +69,8 @@ class UserDao(
     fun getUserById(id: UUID): User? {
         return template.queryForObject(
             "select ui.id, u.enabled, u.password, ui.email, ui.first_name, ui.second_name, " +
-                    "ui.birth_date, ui.city, ui.interests from user_info ui inner join users u on u.id = ui.id " +
-                    "where ui.id = :id",
+                    "ui.birth_date, ui.city, ui.interests, ui.is_celebrity from user_info ui inner join users u " +
+                    "on u.id = ui.id where ui.id = :id",
             mapOf("id" to id)
         ) { rs, _ ->
             buildUser(rs)
@@ -78,7 +80,7 @@ class UserDao(
     @Transactional(readOnly = true)
     fun searchByFirstAndLastName(searchRequest: UserSearchRequest): List<UserInfoResponse> {
         return template.query(
-            "select id, email, first_name, second_name, birth_date, city, interests from user_info " +
+            "select id, email, first_name, second_name, birth_date, city, interests, is_celebrity from user_info " +
                     "where first_name like :first_name and second_name like :second_name order by id",
             mapOf(
                 "first_name" to searchRequest.firstName + "%",
@@ -101,6 +103,7 @@ class UserDao(
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun buildUserInfo(rs: ResultSet): UserInfoResponse {
         return UserInfoResponse(
             rs.getString("email"),
@@ -108,11 +111,12 @@ class UserDao(
             rs.getString("second_name"),
             rs.getDate("birth_date"),
             rs.getString("city"),
-            setOf(*rs.getArray("interests").array as Array<String>)
+            setOf(*rs.getArray("interests").array as Array<String>),
+            rs.getBoolean("is_celebrity")
         )
     }
 
-            @Suppress("UNCHECKED_CAST")
+    @Suppress("UNCHECKED_CAST")
     private fun buildUser(rs: ResultSet): User {
         return User(
             rs.getObject("id") as UUID,
@@ -123,7 +127,8 @@ class UserDao(
             rs.getString("second_name"),
             rs.getDate("birth_date"),
             rs.getString("city"),
-            setOf(*rs.getArray("interests").array as Array<String>)
+            setOf(*rs.getArray("interests").array as Array<String>),
+            rs.getBoolean("is_celebrity")
         )
     }
 }

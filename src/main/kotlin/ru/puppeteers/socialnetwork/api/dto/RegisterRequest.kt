@@ -10,5 +10,6 @@ data class RegisterRequest(
     val birthDate: LocalDate,
     val city: String,
     val password: String,
-    val interests: Set<String>
+    val interests: Set<String>,
+    val isCelebrity: Boolean
 )

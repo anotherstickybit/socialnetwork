@@ -13,7 +13,8 @@ class UserMapper {
                 user.secondName,
                 user.birthDate,
                 user.city,
-                user.interests
+                user.interests,
+                user.isCelebrity
             )
         }
     }
