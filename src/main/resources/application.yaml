@@ -27,3 +27,7 @@ rabbit:
     name: posts_exchange
   routing:
     key: posts_routing_key
+
+stomp:
+  broker:
+    relay: /feed/posted

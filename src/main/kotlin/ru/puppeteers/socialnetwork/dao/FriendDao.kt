@@ -21,14 +21,14 @@ class FriendDao(
     fun addFriend(userId: UUID, friendId: UUID) {
         try {
             template.update(
-                "insert into friendship(user_id, friend_id) values (:user_id, friend_id)",
+                "insert into friendship(user_id, friend_id) values (:user_id, :friend_id)",
                 mapOf(
                     "user_id" to userId,
                     "friend_id" to friendId
                 )
             )
             template.update(
-                "insert into friendship(user_id, friend_id) values (:user_id, friend_id)",
+                "insert into friendship(user_id, friend_id) values (:user_id, :friend_id)",
                 mapOf(
                     "user_id" to friendId,
                     "friend_id" to userId
@@ -66,8 +66,8 @@ class FriendDao(
         try {
             val friendsList = arrayListOf<User>()
             val friendsIds = template.queryForList(
-                "select friend_id from friendship where user_id = :user_id",
-                mapOf("user_id" to id.toString()),
+                "select friend_id from friendship where user_id = :userId",
+                mapOf("userId" to id),
                 UUID::class.java
             )
             friendsIds.forEach {
