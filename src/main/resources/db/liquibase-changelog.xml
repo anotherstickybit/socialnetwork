@@ -10,4 +10,5 @@
     <include file="changelog/02-index.xml" relativeToChangelogFile="true"/>
     <include file="changelog/03-friendship_post.xml" relativeToChangelogFile="true"/>
     <include file="changelog/04-add_celebrity_column.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/05-dialogues.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
