@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    
+    <changeSet id="05" author="Sadykov-MZ">
+        <preConditions>
+            <not>
+                <tableExists tableName="dialogue"/>
+                <tableExists tableName="dialogue_message"/>
+            </not>
+        </preConditions>
+        
+        
+        <createTable tableName="dialogue">
+            <column name="id" type="uuid" defaultValue="uuid_generate_v4()" remarks="Идентификатор записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="creator_id" type="uuid" remarks="Идентификатор создателя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValue="now()" remarks="Дата создания">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="dialogue_message">
+            <column name="id" type="uuid" defaultValue="uuid_generate_v4()" remarks="Идентификатор записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="dialogue_id" type="uuid" remarks="Идентификатор диалога">
+                <constraints nullable="false" foreignKeyName="fk_dialogue_message_dialogue" references="dialogue(id)"/>
+            </column>
+            <column name="author_id" type="uuid" remarks="Идентификатор автора сообщения">
+                <constraints nullable="false" foreignKeyName="fk_dialogue_message_user" references="users(id)"/>
+            </column>
+            <column name="message_text" type="text" remarks="Текст сообщения"/>
+            <column name="created_date" type="timestamp" defaultValue="now()" remarks="Дата создания">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+    </changeSet>
+    
+</databaseChangeLog>
