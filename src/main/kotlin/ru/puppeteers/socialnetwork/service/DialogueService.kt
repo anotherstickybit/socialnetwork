@@ -38,7 +38,7 @@ class DialogueService(
         return dialogueDao.getDialogueMessages(readDialogueMessagesRequest.dialogueId)
     }
 
-    fun deleteDialogueMessagesV2(readDialogueMessagesRequest: ReadDialogueMessagesRequest): List<DialogueMessageEntity> {
+    fun getDialogueMessagesV2(readDialogueMessagesRequest: ReadDialogueMessagesRequest): List<DialogueMessageEntity> {
         val messageEntityList = template.postForObject(
             DIALOGUE_BASE_URL + "read", readDialogueMessagesRequest,
             DialogueMessageEntityList::class.java
